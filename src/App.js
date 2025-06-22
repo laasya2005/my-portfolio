@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import { 
   Github, 
   Linkedin, 
@@ -76,55 +75,25 @@ const Portfolio = () => {
   }, []);
 
   // Scroll spy for navigation
-  useEffect(() => {
-    const handleScroll = () => {
-      // Don't update active section if we're currently navigating
-      if (isNavigating) {
-        return;
-      }
-      
-      const sections = ['home', 'about', 'education', 'experience', 'projects', 'skills', 'contact'];
-      const scrollPosition = window.scrollY + 100;
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
-      
-      // Check if we're at the bottom of the page (very aggressive threshold)
-      if (window.scrollY + windowHeight >= documentHeight - 200) {
-        console.log('Setting contact as active - at bottom of page');
-        setActiveSection('contact');
-        return;
-      }
-      
-      let currentSection = 'home';
-      
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = sections[i];
-        const element = document.getElementById(section);
-        if (element) {
-          const { offsetTop } = element;
-          // For contact section, be very aggressive and check if we're past skills
-          if (section === 'contact') {
-            const skillsElement = document.getElementById('skills');
-            if (skillsElement && scrollPosition >= skillsElement.offsetTop + skillsElement.offsetHeight - 100) {
-              currentSection = section;
-              console.log('Setting active section to contact - past skills section');
-              break;
-            }
-          } else {
-            if (scrollPosition >= offsetTop) {
-              currentSection = section;
-              console.log('Setting active section to:', section);
-              break;
-            }
-          }
-        }
-      }
-      
-      setActiveSection(currentSection);
-    };
+  const handleScroll = () => {
+    if (isNavigating) return;
+    
+    const sections = ['home', 'about', 'education', 'experience', 'projects', 'skills', 'contact'];
+    const scrollPosition = window.scrollY + 100;
 
+    for (let i = sections.length - 1; i >= 0; i--) {
+      const section = document.getElementById(sections[i]);
+      if (section && section.offsetTop <= scrollPosition) {
+        setActiveSection(sections[i]);
+        break;
+      }
+    }
+  };
+
+  useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+import React, { useState, useEffect } from 'react';
   }, []);
 
   useEffect(() => {
@@ -243,6 +212,87 @@ const Portfolio = () => {
       name: "Applied AI professional Certificate",
       issuer: "IBM",
       image: "https://www.ibm.com/design/language/dce3f5b8db2c0ff04296123f424b3d41/core_blue50_on_black.svg",
+import { 
+  Github, 
+  Linkedin, 
+  Mail, 
+  MapPin, 
+  ChevronDown, 
+  Terminal, 
+  Sun, 
+  Moon, 
+  Menu, 
+  X, 
+  ExternalLink,
+  Globe,
+  Database,
+  Camera,
+  Brain,
+  Code,
+  BarChart3,
+  FileText,
+  Image,
+  Layers
+} from 'lucide-react';
+
+const Portfolio = () => {
+  const fullText = "Software Developer | Content Creator | AI Enthusiast | Automation Builder";
+  const [darkMode, setDarkMode] = useState(true);
+  const [activeSection, setActiveSection] = useState('home');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [typedText, setTypedText] = useState('');
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [isNavigating, setIsNavigating] = useState(false);
+  useEffect(() => {
+    let index = 0;
+    const timer = setInterval(() => {
+      if (index < fullText.length) {
+        setTypedText(fullText.slice(0, index + 1));
+        index++;
+      } else {
+        clearInterval(timer);
+      }
+    }, 50);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Set initial active section
+  useEffect(() => {
+    const handleInitialScroll = () => {
+      const sections = ['home', 'about', 'education', 'experience', 'projects', 'skills', 'contact'];
+      const scrollPosition = window.scrollY + 100;
+      
+      // Check if we're at the bottom of the page
+      if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 100) {
+        setActiveSection('contact');
+        return;
+      }
+      
+      let currentSection = 'home';
+      
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i];
+        const element = document.getElementById(section);
+        if (element) {
+          const { offsetTop } = element;
+          if (scrollPosition >= offsetTop) {
+            currentSection = section;
+            break;
+          }
+        }
+      }
+      
+      setActiveSection(currentSection);
+    };
+    
+    handleInitialScroll();
+  }, []);
+
+  // Temporarily comment out this useEffect
+  /*
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
       link: "https://www.coursera.org/account/accomplishments/specialization/certificate/HEM3DGKZT8TN"
     },
     {
@@ -483,6 +533,45 @@ const Portfolio = () => {
             <div className="flex items-center space-x-4">
               <button
                 onClick={() => setDarkMode(!darkMode)}
+  }, []);
+  */
+
+  useEffect(() => {
+    if (!isNavigating) {
+      handleScroll();
+    }
+  }, [isNavigating]);
+
+  const projects = [
+    {
+      id: 1,
+      title: "Fractal Analysis of Financial Markets",
+      category: "Research & ML",
+      description: "Advanced research project analyzing financial markets using fractal analysis and machine learning. Implements Mandelbrot fractal analysis to predict future stock prices by identifying self-similarity patterns in financial time series data.",
+      tech: ["Python", "Jupyter Notebook", "SciPy", "MSM Model", "Time Series Analysis", "Statistical Analysis", "Pandas", "NumPy", "Matplotlib", "Financial Modeling", "Data Visualization", "Machine Learning"],
+      metrics: "Published research paper",
+      github: "https://github.com/laasya2005/Fractal-Analysis",
+      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect width='400' height='300' fill='%238b5cf6'/%3E%3Ctext x='50%25' y='40%25' text-anchor='middle' dy='.3em' fill='white' font-size='18'%3EFractal Analysis%3C/text%3E%3Ctext x='50%25' y='60%25' text-anchor='middle' dy='.3em' fill='white' font-size='14'%3EFinancial Markets%3C/text%3E%3C/svg%3E"
+    },
+    {
+      id: 2,
+      title: "Home Automation Using Packet Tracer",
+      category: "Research & IoT",
+      description: "Published research paper on smart home automation system simulation using Cisco Packet Tracer. The system integrates IoT devices, sensors, actuators, and microcontrollers to create an automated smart home environment.",
+      tech: ["Cisco Packet Tracer", "Internet of Things (IoT)", "Network Simulation", "Smart Home Systems", "Wireless Networks", "Sensor Integration", "Actuator Control", "Microcontrollers", "Network Configuration", "IoT Commands", "Virtual Network Design"],
+      metrics: "Published in Springer Conference Proceedings",
+      github: "https://link.springer.com/chapter/10.1007/978-981-19-2004-2_56",
+      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect width='400' height='300' fill='%230ea5e9'/%3E%3Ctext x='50%25' y='40%25' text-anchor='middle' dy='.3em' fill='white' font-size='16'%3EHome Automation%3C/text%3E%3Ctext x='50%25' y='60%25' text-anchor='middle' dy='.3em' fill='white' font-size='14'%3EPacket Tracer%3C/text%3E%3C/svg%3E"
+    },
+    {
+      id: 3,
+      title: "Tetra Bot—A Multi-purpose Robot",
+      category: "Research & Robotics",
+      description: "Published research paper on autonomous multi-purpose robot design integrating embedded systems, IoT, and image processing. The robot performs tasks like grass cutting, waste management, water serving, and rain detection using various sensors.",
+      tech: ["Embedded Systems", "WeMoS D1 Microcontroller", "Internet of Things (IoT)", "Image Processing", "Haar Cascade Algorithms", "Ultrasonic Sensors", "Rain Sensors", "Face Detection", "MIT App Inventor", "Mechanical Design", "Autonomous Systems", "Database Integration"],
+      metrics: "Published in Springer Conference Proceedings",
+      github: "https://link.springer.com/chapter/10.1007/978-981-19-2004-2_50",
+      image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect width='400' height='300' fill='%2310b981'/%3E%3Ctext x='50%25' y='40%25' text-anchor='middle' dy='.3em' fill='white' font-size='18'%3ETetra Bot%3C/text%3E%3Ctext x='50%25' y='60%25' text-anchor='middle' dy='.3em' fill='white' font-size='14'%3EMulti-purpose Robot%3C/text%3E%3C/svg%3E"
                 className="p-2 rounded-lg hover:bg-gray-800/20 transition-colors"
               >
                 {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
