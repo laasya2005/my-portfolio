@@ -1,4 +1,4 @@
-# Laasya Lata Anumakonda - Portfolio
+# Portfolio
 
 A modern, responsive portfolio website built with React and Tailwind CSS. This showcases my work as a Software Developer, Content Creator, and AI Automation Engineer.
 
