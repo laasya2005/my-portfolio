@@ -190,7 +190,7 @@ const Portfolio = () => {
       name: "Applied AI professional Certificate",
       issuer: "IBM",
       image: "https://www.ibm.com/design/language/dce3f5b8db2c0ff04296123f424b3d41/core_blue50_on_black.svg",
-      link: "https://www.coursera.org/account/accomplishments/certificate/HEM3DGKZT8TN"
+      link: "https://www.coursera.org/account/accomplishments/specialization/certificate/HEM3DGKZT8TN"
     },
     {
       name: "Cloud foundations",
@@ -541,13 +541,13 @@ const Portfolio = () => {
               </div>
               <div className="md:col-span-2">
                 <p className="text-lg mb-6 leading-relaxed">
-                I'm a software developer who also creates content and builds automation tools. I love using AI to make things work better and faster.
+                  I'm a software developer who also creates content and builds automation tools. I love using AI to make things work better and faster.
 
-                I got my Master's in Computer Science from the University of Colorado. I like finding ways to use AI to solve real problems and make everyday tasks easier.
+                  I got my Master's in Computer Science from the University of Colorado. I like finding ways to use AI to solve real problems and make everyday tasks easier.
 
-                When I'm not coding, I create content about tech and share what I learn with others. I enjoy building tools that help people get things done without all the hassle.
+                  When I'm not coding, I create content about tech and share what I learn with others. I enjoy building tools that help people get things done without all the hassle.
 
-                I want to build software that actually helps people and makes their lives a bit easier.
+                  I want to build software that actually helps people and makes their lives a bit easier.
                 </p>
               </div>
             </div>
