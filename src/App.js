@@ -4,7 +4,6 @@ import {
   Linkedin, 
   Mail, 
   MapPin, 
-  ChevronDown, 
   Terminal, 
   Sun, 
   Moon, 
@@ -66,7 +65,7 @@ const Portfolio = () => {
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [handleScroll]);
 
   const scrollToSection = (sectionId) => {
     setIsNavigating(true);
