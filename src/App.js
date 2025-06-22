@@ -36,13 +36,20 @@ const Portfolio = () => {
     
     const sections = ['home', 'about', 'education', 'experience', 'projects', 'skills', 'contact'];
     const scrollPosition = window.scrollY + 100;
-
+    let found = false;
     for (let i = sections.length - 1; i >= 0; i--) {
       const section = document.getElementById(sections[i]);
       if (section && section.offsetTop <= scrollPosition) {
         setActiveSection(sections[i]);
+        found = true;
         break;
       }
+    }
+    // If at the bottom of the page, always highlight contact
+    if (
+      window.innerHeight + window.scrollY >= document.body.offsetHeight - 2
+    ) {
+      setActiveSection('contact');
     }
   };
 
@@ -155,11 +162,58 @@ const Portfolio = () => {
   ];
 
   const skills = {
-    "Programming Languages": ["Python", "JavaScript", "TypeScript", "C++", "Java"],
-    "Front End Development": ["ReactJs", "NextJs", "jQuery", "Bootstrap", "HTML 5", "CSS 3", "JSON", "XML"],
-    "Back End Development": ["Flask", "Django", "Strapi", "REST API", "SQL", "PostgreSQL", "MongoDB"],
-    "Libraries/Frameworks": ["Pandas", "NumPy", "Scikit learn", "SciPy", "TensorFlow", "PyTorch", "Keras", "PyBullet", "OpenCV", "AWS", "NodeJS", "PyUnit", "Selenium", "PyTest"],
-    "Tools & Methodologies": ["CI/CD", "Jenkins", "Scrum", "Agile", "Jira", "Domo", "Git", "GitHub"]
+    "Programming Languages": [
+      { name: "Python", width: 95 },
+      { name: "JavaScript", width: 90 },
+      { name: "TypeScript", width: 85 },
+      { name: "C++", width: 80 },
+      { name: "Java", width: 75 }
+    ],
+    "Front End Development": [
+      { name: "ReactJs", width: 95 },
+      { name: "NextJs", width: 90 },
+      { name: "jQuery", width: 80 },
+      { name: "Bootstrap", width: 85 },
+      { name: "HTML 5", width: 98 },
+      { name: "CSS 3", width: 95 },
+      { name: "JSON", width: 90 },
+      { name: "XML", width: 80 }
+    ],
+    "Back End Development": [
+      { name: "Flask", width: 85 },
+      { name: "Django", width: 80 },
+      { name: "Strapi", width: 75 },
+      { name: "REST API", width: 90 },
+      { name: "SQL", width: 85 },
+      { name: "PostgreSQL", width: 80 },
+      { name: "MongoDB", width: 75 }
+    ],
+    "Libraries/Frameworks": [
+      { name: "Pandas", width: 95 },
+      { name: "NumPy", width: 95 },
+      { name: "Scikit learn", width: 90 },
+      { name: "SciPy", width: 85 },
+      { name: "TensorFlow", width: 80 },
+      { name: "PyTorch", width: 75 },
+      { name: "Keras", width: 80 },
+      { name: "PyBullet", width: 70 },
+      { name: "OpenCV", width: 85 },
+      { name: "AWS", width: 70 },
+      { name: "NodeJS", width: 80 },
+      { name: "PyUnit", width: 75 },
+      { name: "Selenium", width: 80 },
+      { name: "PyTest", width: 75 }
+    ],
+    "Tools & Methodologies": [
+      { name: "CI/CD", width: 80 },
+      { name: "Jenkins", width: 75 },
+      { name: "Scrum", width: 85 },
+      { name: "Agile", width: 90 },
+      { name: "Jira", width: 80 },
+      { name: "Domo", width: 70 },
+      { name: "Git", width: 95 },
+      { name: "GitHub", width: 95 }
+    ]
   };
 
   const education = [
@@ -181,10 +235,22 @@ const Portfolio = () => {
 
   const certifications = [
     {
+      name: "Programming for Everybody",
+      issuer: "University of Michigan",
+      image: "https://1000logos.net/wp-content/uploads/2018/08/University-of-Michigan-Logo.png",
+      link: "https://www.coursera.org/account/accomplishments/certificate/5PKAYKFECR3A"
+    },
+    {
       name: "Machine Learning by Andrew Ng",
       issuer: "Stanford University",
       image: "https://pbs.twimg.com/media/FMqBIm-VUAICbT5.jpg:large",
       link: "https://www.coursera.org/account/accomplishments/specialization/certificate/9SR32ALY22K9"
+    },
+    {
+      name: "Algorithmic Toolbox",
+      issuer: "University of California, San Diego",
+      image: "https://download.logo.wine/logo/University_of_California%2C_San_Diego/University_of_California%2C_San_Diego-Logo.wine.png",
+      link: "https://www.coursera.org/account/accomplishments/certificate/SSNZPX4PRGLU"
     },
     {
       name: "Applied AI professional Certificate",
@@ -193,34 +259,28 @@ const Portfolio = () => {
       link: "https://www.coursera.org/account/accomplishments/specialization/certificate/HEM3DGKZT8TN"
     },
     {
-      name: "Cloud foundations",
-      issuer: "AWS",
+      name: "Neural Networks and Deep Learning",
+      issuer: "DeepLearning.AI",
       image: "https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F125559383%2F317212851579%2F1%2Foriginal.20210208-232017?w=512&auto=format%2Ccompress&q=75&sharp=10&rect=0%2C0%2C2246%2C2246&s=40aa0fb13fe40ce86241ae7b8fc8caea",
       link: "https://www.coursera.org/account/accomplishments/certificate/22BMY59HGCWP"
     },
     {
-      name: "Cisco Certified Network Associate",
-      issuer: "CISCO",
-      image: "https://images.credly.com/images/70d71df5-f3dc-4380-9b9d-f22513a70417/CCNAITN__1_.png",
-      link: "https://www.credly.com/badges/1ea8c608-b03b-4954-9eed-9224c2b0deb3?source=linked_in_profile"
-    },
-    {
-      name: "Neural Networks and Deep Learning",
-      issuer: "DeepLearning.AI",
+      name: "Cloud Computing",
+      issuer: "Credly",
       image: "https://images.credly.com/images/73e4a58b-a8ef-41a3-a7db-9183dd269882/image.png",
       link: "https://www.credly.com/badges/378fa22d-2afd-4d77-809e-71fa1aebc510?source=linked_in_profile"
     },
     {
-      name: "Algorithmic Toolbox",
-      issuer: "University of San Diego",
-      image: "https://download.logo.wine/logo/University_of_California%2C_San_Diego/University_of_California%2C_San_Diego-Logo.wine.png",
-      link: "https://www.coursera.org/account/accomplishments/certificate/SSNZPX4PRGLU"
+      name: "Cisco Certified Network Associate",
+      issuer: "Cisco",
+      image: "https://images.credly.com/images/70d71df5-f3dc-4380-9b9d-f22513a70417/CCNAITN__1_.png",
+      link: "https://www.credly.com/badges/1ea8c608-b03b-4954-9eed-9224c2b0deb3?source=linked_in_profile"
     },
     {
-      name: "Programming for Everybody",
-      issuer: "University of Michigan",
-      image: "https://1000logos.net/wp-content/uploads/2018/08/University-of-Michigan-Logo.png",
-      link: "https://www.coursera.org/account/accomplishments/certificate/5PKAYKFECR3A"
+      name: "Machine Learning",
+      issuer: "Credly",
+      image: "https://images.credly.com/images/254b883a-44a3-4cec-b6f2-946a80522b39/image.png",
+      link: "https://www.credly.com/badges/195bb1c3-f396-4f89-a9e2-aedcfb4a7f7f?source=linked_in_profile"
     }
   ];
 
@@ -310,9 +370,7 @@ const Portfolio = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-4">
-              <h1 className="text-xl font-bold bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">
-                Laasya Lata
-              </h1>
+              {/* Removed Laasya Lata from top left */}
             </div>
             
             {/* Desktop Navigation */}
@@ -397,8 +455,7 @@ const Portfolio = () => {
             <span className="animate-pulse">|</span>
           </p>
           <p className="text-lg text-gray-400 mb-12 max-w-2xl mx-auto">
-            Passionate software developer with expertise in AI/ML, web development, and automation. 
-            I love building innovative solutions that make a difference.
+          I'm a software developer who loves building things that work well. I like making apps faster and creating interfaces that people enjoy using. With my Master's in Computer Science, I've learned to solve real problems with good code.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
@@ -441,17 +498,13 @@ const Portfolio = () => {
             darkMode ? 'border-gray-700' : 'border-gray-200'
           }`}>
             <p className="text-lg leading-relaxed mb-6">
-              I'm a passionate software developer with a Master's degree in Computer Science from the University of Colorado Denver. 
-              My journey in technology has been driven by curiosity and a desire to create meaningful solutions.
+            I'm a software developer who also creates content and builds automation tools. I love using AI to make things work better and faster.
             </p>
             <p className="text-lg leading-relaxed mb-6">
-              I specialize in AI/ML, web development, and automation, with experience in both frontend and backend technologies. 
-              I love working on projects that challenge me to learn new technologies and solve complex problems.
+            I got my Master's in Computer Science from the University of Colorado. I like finding ways to use AI to solve real problems and make everyday tasks easier.
             </p>
             <p className="text-lg leading-relaxed">
-              When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, 
-              or sharing my knowledge through content creation. I believe in continuous learning and staying updated 
-              with the latest industry trends.
+            When I'm not coding, I create content about tech and share what I learn with others. I enjoy building tools that help people get things done without all the hassle. I want to build software that actually helps people and makes their lives a bit easier.
             </p>
           </div>
         </div>
@@ -695,12 +748,11 @@ const Portfolio = () => {
                       <div className={`px-3 py-2 ${
                         darkMode ? 'bg-gray-700/50' : 'bg-gray-100'
                       }`}>
-                        <span className="relative z-10">{skill}</span>
+                        <span className="relative z-10">{skill.name}</span>
                         <div
                           className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20"
                           style={{
-                            width: `${80 + Math.random() * 20}%`,
-                            animation: `slideIn 1s ease-out ${index * 0.1}s both`
+                            width: `${skill.width}%`
                           }}
                         />
                       </div>
@@ -863,8 +915,8 @@ const Portfolio = () => {
               {selectedProject.demo && (
                 <a
                   href={selectedProject.demo}
-                  target="_blank"
-                  rel="noopener noreferrer"
+          target="_blank"
+          rel="noopener noreferrer"
                   className="flex items-center space-x-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
                 >
                   <ExternalLink className="w-5 h-5" />
