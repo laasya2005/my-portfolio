@@ -30,52 +30,7 @@ const Portfolio = () => {
   const [typedText, setTypedText] = useState('');
   const [selectedProject, setSelectedProject] = useState(null);
   const [isNavigating, setIsNavigating] = useState(false);
-  useEffect(() => {
-    let index = 0;
-    const timer = setInterval(() => {
-      if (index < fullText.length) {
-        setTypedText(fullText.slice(0, index + 1));
-        index++;
-      } else {
-        clearInterval(timer);
-      }
-    }, 50);
-    return () => clearInterval(timer);
-  }, []);
 
-  // Set initial active section
-  useEffect(() => {
-    const handleInitialScroll = () => {
-      const sections = ['home', 'about', 'education', 'experience', 'projects', 'skills', 'contact'];
-      const scrollPosition = window.scrollY + 100;
-      
-      // Check if we're at the bottom of the page
-      if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 100) {
-        setActiveSection('contact');
-        return;
-      }
-      
-      let currentSection = 'home';
-      
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = sections[i];
-        const element = document.getElementById(section);
-        if (element) {
-          const { offsetTop } = element;
-          if (scrollPosition >= offsetTop) {
-            currentSection = section;
-            break;
-          }
-        }
-      }
-      
-      setActiveSection(currentSection);
-    };
-    
-    handleInitialScroll();
-  }, []);
-
-  // Scroll spy for navigation
   const handleScroll = () => {
     if (isNavigating) return;
     
@@ -92,15 +47,38 @@ const Portfolio = () => {
   };
 
   useEffect(() => {
+    const timer = setInterval(() => {
+      setTypedText(fullText.slice(0, typedText.length + 1));
+      if (typedText === fullText) {
+        clearInterval(timer);
+      }
+    }, 100);
+    return () => clearInterval(timer);
+  }, [typedText, fullText]);
+
+  useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  useEffect(() => {
-    if (!isNavigating) {
-      handleScroll();
+  const scrollToSection = (sectionId) => {
+    setIsNavigating(true);
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const offset = 80;
+      const elementPosition = element.offsetTop - offset;
+      window.scrollTo({
+        top: elementPosition,
+        behavior: 'smooth'
+      });
+      setActiveSection(sectionId);
+      setMobileMenuOpen(false);
+      
+      setTimeout(() => {
+        setIsNavigating(false);
+      }, 1000);
     }
-  }, [isNavigating]);
+  };
 
   const projects = [
     {
@@ -402,28 +380,6 @@ const Portfolio = () => {
       skills: ["MPLABx IDE", "C (Programming Language)", "PIC18 Microcontroller", "Arduino", "Embedded Systems", "Electronic Voting Systems", "Hardware Programming", "System Optimization", "Accuracy Improvement", "Microcontroller Programming"]
     }
   ];
-
-  const scrollToSection = (sectionId) => {
-    console.log('Scrolling to section:', sectionId);
-    setIsNavigating(true);
-    const element = document.getElementById(sectionId);
-    if (element) {
-      const offset = 80; // Account for fixed navigation height
-      const elementPosition = element.offsetTop - offset;
-      console.log('Element position:', elementPosition, 'offsetTop:', element.offsetTop);
-      window.scrollTo({
-        top: elementPosition,
-        behavior: 'smooth'
-      });
-      setActiveSection(sectionId); // Immediately set active section
-      setMobileMenuOpen(false);
-      
-      // Reset navigation flag after scroll animation
-      setTimeout(() => {
-        setIsNavigating(false);
-      }, 1000);
-    }
-  };
 
   return (
     <div className={`min-h-screen ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'} transition-colors duration-300`}>
